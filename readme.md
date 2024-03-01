@@ -38,18 +38,27 @@ It is normal that some sensors are not available. This is because the E3DC devic
 
 The following sensors are available:
 
-  * `e3dc_grid_export_power` - Grid Export Power in Watt
-  * `e3dc_grid_import_power` - Grid Import Power in Watt
-  * `e3dc_battery_charge_power` - Battery Charge Power in Watt
-  * `e3dc_battery_discharge_power` - Battery Discharge Power in Watt
-  * `e3dc_autarky` - Autarky in % per day
-  * `e3dc_external_power` - Power of an additional source in Watt
-  * `e3dc_own_consumption` - Own Consumption in % per day
+  * e3dc_modbus_id                   - E3DC Modbus ID
+  * e3dc_modbus_firmware             - E3DC Modbus Firmware
+  * e3dc_register_amount             - E3DC amount of Register
+  * e3dc_manufacturer                - E3DC Manufacturer
+  * e3dc_model                       - E3DC Model
+  * e3dc_serial_number               - E3DC Serial Number
+  * e3dc_firmware_release            - E3DC Firmware Release
+  * e3dc_solar_power                 - E3DC Solar Power [W]
+  * 'e3dc_external_power'            - E3DC External Power in Watt
+  * `e3dc_grid_export_power`         - E3DC Grid Export Power in Watt
+  * `e3dc_grid_import_power`         - E3DC Grid Import Power in Watt
+  * `e3dc_battery_charge_power`      - Battery Charge Power in Watt
+  * `e3dc_battery_discharge_power`   - Battery Discharge Power in Watt
+  * `e3dc_autarky`                   - Autarky in % per day
+  * `e3dc_external_power`            - Power of an additional source in Watt
+  * `e3dc_own_consumption`           - Own Consumption in % per day
   * `e3dc_emergency_power_state_text` - emergency power state in text
 
 ## Credits
 
 This configuration Files are based on the work of Community-Contribution: [E3DC in Energy Dashboard](https://community.home-assistant.io/t/e3dc-in-energy-dashboard/379800)
 
-Thangs to [Roman](https://github.com/Roemer) and [MrIceman11](https://github.com/MrIceman11) for Sharing the work.
+Thanks to [Roman](https://github.com/Roemer) and [MrIceman11](https://github.com/MrIceman11) for sharing of the work.
 
