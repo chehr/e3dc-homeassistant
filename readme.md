@@ -1,6 +1,6 @@
 # E3DC to Home Assistant
 
-This is a custom configuration for Home Assistant to read data from an E3DC device via ModBus/TCP.
+This is a custom configuration for Home Assistant to read data from an E3DC device via ModBus/TCP Version: V2.20 from 24.07.2023.
 
 ## Installation
 
