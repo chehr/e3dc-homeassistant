@@ -1,3 +1,5 @@
+# Implementierung der Modbus/TCP-Schnittstelle Version: V2.20 vom 24.07.2023
+# C.Hehr 01.03.2024 - getested mit E3/DC S10X
 e3dc_sensors:
   sensor:
     # Templates
@@ -74,18 +76,34 @@ e3dc_sensors:
           value_template: >
             {% set eps = states('sensor.e3dc_emergency_power_state') %}
             {% if eps == '0' %}
-              nicht unterstützt
+              Notstrom wird nicht von Ihrem Gerät unterstützt
             {% elif eps == '1' %}
-              aktiv
+              Notstrom aktiv
             {% elif eps == '2' %}
-              inaktiv
+              Notstrom nicht aktiv
             {% elif eps == '3' %}
-              nicht verfügbar
+              Notstrom nicht verfügbar
             {% elif eps == '4' %}
-              falsche Position
+              Motorschalter falsche Position
             {% else %}
               unbekannt
             {% endif %}
+        e3dc_string_1_current:
+          friendly_name: "E3DC string 1 Current"
+          unique_id: e3dc_string_1_current
+          device_class: current
+          unit_of_measurement: A
+          value_template: >- 
+            {% set Current = states('sensor.e3dc_string_1_current_100') | float %}
+            {{ (Current) / 100 }}
+        e3dc_string_2_current:
+          friendly_name: "E3DC string 2 Current"
+          unique_id: e3dc_string_2_current
+          device_class: current
+          unit_of_measurement: A
+          value_template: >- 
+            {% set Current = states('sensor.e3dc_string_2_current_100') | float %}
+            {{ (Current) / 100 }}
     # Integrations
     - platform: integration
       source: sensor.e3dc_grid_import_power
