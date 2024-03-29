@@ -66,7 +66,7 @@ The following sensors are available:
 
 ## Credits
 
-This configuration Files are based on the work of Community-Contribution: [E3DC in Energy Dashboard](https://community.home-assistant.io/t/e3dc-in-energy-dashboard/379800)
+This configuration Files are an extended version based on the work of Community-Contribution: [E3DC in Energy Dashboard](https://community.home-assistant.io/t/e3dc-in-energy-dashboard/379800)
 
 Thanks to [Roman](https://github.com/Roemer) and [MrIceman11](https://github.com/MrIceman11) for sharing the work.
 
