@@ -1,0 +1,46 @@
+    # Integration (Riemann sum integral)
+#  integration:
+template:
+  sensor:
+    - platform: integration
+      source: sensor.e3dc_grid_import_power
+      name: E3DC Grid Import Energy
+      unit_prefix: k
+      round: 2
+      method: trapezoidal
+    - platform: integration
+      source: sensor.e3dc_grid_export_power
+      name: E3DC Grid Export Energy
+      unit_prefix: k
+      round: 2
+      method: trapezoidal
+    - platform: integration
+      source: sensor.e3dc_solar_power
+      name: E3DC Solar Energy
+      unit_prefix: k
+      round: 2
+      method: trapezoidal
+    - platform: integration
+      source: sensor.e3dc_external_power
+      name: E3DC External Energy
+      unit_prefix: k
+      round: 2
+      method: trapezoidal
+    - platform: integration
+      source: sensor.e3dc_battery_power
+      name: E3DC Builtin Battery Energy
+      unit_prefix: k
+      round: 2
+      method: trapezoidal
+    - platform: integration
+      source: sensor.e3dc_battery_charge_power
+      name: E3DC Battery Charge Energy
+      unit_prefix: k
+      round: 2
+      method: trapezoidal
+    - platform: integration
+      source: sensor.e3dc_battery_discharge_power
+      name: E3DC Battery Discharge Energy
+      unit_prefix: k
+      round: 2
+      method: trapezoidal    
