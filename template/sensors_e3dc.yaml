@@ -1,0 +1,121 @@
+ - sensor:
+        # e3dc_external_power
+       - name: E3DC External Power
+         unique_id: e3dc_external_power
+         unit_of_measurement: W
+         state: "{{ states('sensor.e3dc_external_power') | float | abs }}"
+       # e3dc_grid_export_power:
+       - name: "E3DC Grid Export Power"
+         unique_id: e3dc_grid_export_power
+         unit_of_measurement: "W"
+         device_class: power
+         state: >
+            {% set power = states('sensor.e3dc_grid_power') | int(0) %}
+            {% if power > 0 %}
+              0
+            {% else -%}
+              {{ power | abs }}
+            {% endif %}
+       # e3dc_grid_import_power:
+       - name: "E3DC Grid Import Power"
+         unique_id: e3dc_grid_import_power
+         unit_of_measurement: W
+         device_class: power
+         state: >
+            {% set power = states('sensor.e3dc_grid_power') | int(0) %}
+            {% if power > 0 %}
+              {{ power }}
+            {% else -%}
+              0
+            {% endif %}
+       # e3dc_battery_charge_power:
+       - name: E3DC Battery Charging Power
+         unique_id: e3dc_battery_charge_power
+         unit_of_measurement: W
+         device_class: power
+         state: >
+            {% set power = states('sensor.e3dc_battery_power') | float(0) %}
+            {% if power >= 0 %}
+              {{ power }}
+            {% else %}
+              {% set charge_power = states('sensor.e3dc_battery_charge_power') | float(0) + power %}
+              {{ charge_power if charge_power > 0 else 0 }}
+            {% endif %}
+       # e3dc_battery_discharge_power:
+       - name: E3DC Battery Discharging Power
+         unique_id: e3dc_battery_discharge_power
+         unit_of_measurement: W
+         device_class: power
+         state: >
+            {% set power = states('sensor.e3dc_battery_power') | float(0) %}
+            {% if power <= 0 %}
+              {{ power | abs }} 
+            {% else %}
+              {% set discharge_power = states('sensor.e3dc_battery_charge_power') | float(0) - power %}
+              {{ discharge_power if discharge_power > 0 else 0 }}
+            {% endif %}
+       # e3dc_autarky:
+       - name: "E3DC Autarky"
+         unique_id: e3dc_autarky
+         unit_of_measurement: "%"
+         state: "{{ (states('sensor.e3dc_autarky_and_consumption')|int(0) / 256)|round(0,'floor') }}"
+       # e3dc_own_consumption:
+       - name: "E3DC Own Consumption Ratio"
+         unique_id: e3dc_own_consumption_ratio
+         unit_of_measurement: "%"
+         state: "{{ ((states('sensor.e3dc_autarky_and_consumption')|int(0) / 256 - states('sensor.e3dc_autarky')|int(0)) * 256)|round(0,'floor') }}"
+       # e3dc_emergency_power_state_text:
+       - name: E3DC Emergency Power State Text
+         unique_id: e3dc_emergency_power_state_text
+         state: >
+            {% set eps = states('sensor.e3dc_emergency_power_state') %}
+            {% if eps == '0' %}
+              Notstrom wird nicht von Ihrem Gerät unterstützt
+            {% elif eps == '1' %}
+              Notstrom aktiv
+            {% elif eps == '2' %}
+              Notstrom nicht aktiv
+            {% elif eps == '3' %}
+              Notstrom nicht verfügbar
+            {% elif eps == '4' %}
+              Motorschalter falsche Position
+            {% else %}
+              unbekannt
+            {% endif %}
+  - binary_sensor:
+       - name: "e3dc_battery_loading_blocked"
+         state: "{{ states('sensor.e3dc_ems_state')|int|bitwise_and(1) > 0 }}"
+       - name: "e3dc_battery_unloading_blocked"
+         state: "{{ states('sensor.e3dc_ems_state')|int|bitwise_and(2) > 0 }}"
+       - name: "e3dc_emergency_power_possible"
+         state: "{{ states('sensor.e3dc_ems_state')|int|bitwise_and(4) > 0 }}" 
+       - name: "e3dc_weather_based_loading"
+         state: "{{ states('sensor.e3dc_ems_state')|int|bitwise_and(8) > 0 }}"
+       - name: "e3dc_power_limiter"
+         state: "{{ states('sensor.e3dc_ems_state')|int|bitwise_and(16) > 0 }}"
+       - name: "e3dc_smartcharge_loading_blocked"
+         state: "{{ states('sensor.e3dc_ems_state')|int|bitwise_and(32) > 0 }}"
+       - name: "e3dc_smartcharge_unloading_blocked"
+         state: "{{ states('sensor.e3dc_ems_state')|int|bitwise_and(64) > 0 }}"
+       - name: "e3dc_emergency_power_active"
+         state: "{{ is_state('sensor.e3dc_emergency_power_state', '1') }}"
+       - name: "e3dc_emergency_power_available"
+         state: "{{ is_state('sensor.e3dc_emergency_power_state', '1') or is_state('sensor.e3dc_emergency_power_state', '2') }}"
+         device_class: "power"
+         # Wallbox 0 Multi Connect II
+       - name: "e3dc_wallbox_available_and_useable"
+         state: "{{ states('sensor.e3dc_wallbox_0_ctrl')|int|bitwise_and(1) > 0 }}" # Bit 0
+       - name: "e3dc_solar-powered_mixed-operation"
+         state: "{{ states('sensor.e3dc_wallbox_0_ctrl')|int|bitwise_and(2) > 0 }}"
+       - name: "e3dc_loading-interrupte_loading-released"
+         state: "{{ states('sensor.e3dc_wallbox_0_ctrl')|int|bitwise_and(4) > 0 }}" 
+       - name: "e3dc_car-loading"
+         state: "{{ states('sensor.e3dc_wallbox_0_ctrl')|int|bitwise_and(8) > 0 }}"
+       - name: "e3dc_type-2_connector_locked"
+         state: "{{ states('sensor.e3dc_wallbox_0_ctrl')|int|bitwise_and(16) > 0 }}" # Bit 4
+       - name: "e3dc_type-2_connector_plugged_in"
+         state: "{{ states('sensor.e3dc_wallbox_0_ctrl')|int|bitwise_and(32) > 0 }}"
+       - name: "e3dc_one_or_three_phases_active"
+         state: "{{ states('sensor.e3dc_wallbox_0_ctrl')|int|bitwise_and(4096) > 0 }}" # Bit 12
+
+
