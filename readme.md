@@ -13,6 +13,8 @@ Be sure that you have activated Modbus in your storage.
 Add the following line to your `configuration.yaml` file to make sure, the packages are loaded:
 
 ```
+template:   !include_dir_merge_list  template/
+
 homeassistant:
   packages: !include_dir_merge_named packages/
 ```
