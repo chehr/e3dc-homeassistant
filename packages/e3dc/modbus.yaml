@@ -6,7 +6,7 @@ e3dc_modbus:
       type: tcp
       host: e3dc_ip
       port: 502
-     sensors:
+      sensors:
         # Identification Block
         - name: E3DC Modbus ID
           unique_id: e3dc_modbus_id
@@ -54,7 +54,7 @@ e3dc_modbus:
           device_class: power
           data_type: int32
           address: 40067
-          scan_interval: 2
+          scan_interval: 5
           swap: word
         - name: E3DC Battery Power
           unique_id: e3dc_battery_power
@@ -62,7 +62,7 @@ e3dc_modbus:
           device_class: power
           data_type: int32
           address: 40069
-          scan_interval: 2
+          scan_interval: 5
           swap: word
         - name: E3DC Power Consumption House
           unique_id: e3dc_house_consumption_power
@@ -70,7 +70,7 @@ e3dc_modbus:
           device_class: power
           data_type: int32
           address: 40071
-          scan_interval: 2
+          scan_interval: 5
           swap: word
         - name: E3DC Grid Power
           unique_id: e3dc_grid_power
@@ -78,7 +78,7 @@ e3dc_modbus:
           device_class: power
           data_type: int32
           address: 40073
-          scan_interval: 2
+          scan_interval: 5
           swap: word
         - name: E3DC External Power
           unique_id: e3dc_external_power
@@ -86,7 +86,7 @@ e3dc_modbus:
           device_class: power
           data_type: int32
           address: 40075
-          scan_interval: 2
+          scan_interval: 5
           swap: word
         - name: E3DC Wallbox Power
           unique_id: e3dc_wallbox_power
@@ -94,7 +94,7 @@ e3dc_modbus:
           device_class: power
           data_type: int32
           address: 40077
-          scan_interval: 2
+          scan_interval: 5
           swap: word
         - name: E3DC Wallbox Solar Power
           unique_id: e3dc_wallbox_solar_power
@@ -102,7 +102,7 @@ e3dc_modbus:
           device_class: power
           data_type: int32
           address: 40079
-          scan_interval: 2
+          scan_interval: 5
           swap: word
         - name: E3DC Autarky and Consumption
           unique_id: e3dc_autarky_and_consumption
@@ -144,7 +144,7 @@ e3dc_modbus:
           device_class: voltage
           unit_of_measurement: V
           state_class: measurement
-          scan_interval: 10
+          scan_interval: 5
         - name: E3DC string 2 Voltage
           unique_id: e3dc_string2_voltage
           data_type: uint16
@@ -152,23 +152,27 @@ e3dc_modbus:
           device_class: voltage
           unit_of_measurement: V
           state_class: measurement
-          scan_interval: 10
-        - name: E3DC string 1 Current 100
-          unique_id: e3dc_string1_current_100
+          scan_interval: 5
+        - name: E3DC string 1 Current
+          unique_id: e3dc_string1_current
           data_type: uint16
+          precision: 2
+          scale: 0.01
           address: 40098
           device_class: current
-          #unit_of_measurement: A
+          unit_of_measurement: A
           state_class: measurement
-          scan_interval: 10
-        - name: E3DC string 2 Current 100
-          unique_id: e3dc_string2_current_100
+          scan_interval: 5
+        - name: E3DC string 2 Current
+          unique_id: e3dc_string2_current
           data_type: uint16
+          precision: 2
+          scale: 0.01
           address: 40099
           device_class: current
-          #unit_of_measurement: A
+          unit_of_measurement: A
           state_class: measurement
-          scan_interval: 10
+          scan_interval: 5
         - name: E3DC string 1 power
           unique_id: e3dc_string1_power
           data_type: uint16
@@ -176,7 +180,7 @@ e3dc_modbus:
           device_class: power
           unit_of_measurement: W
           state_class: measurement
-          scan_interval: 10
+          scan_interval: 5
         - name: E3DC string 2 power
           unique_id: e3dc_string2_power
           data_type: uint16
@@ -184,35 +188,63 @@ e3dc_modbus:
           device_class: power
           unit_of_measurement: W
           state_class: measurement
-          scan_interval: 10
+          scan_interval: 5
         - name: E3DC powermeter_0
           unique_id: e3dc_powermeter_0
           data_type: uint16
           address: 40104
           device_class: power
           unit_of_measurement: W
-          scan_interval: 10
+          scan_interval: 5
         - name: E3DC powermeter L01
           unique_id: e3dc_powermeter_L01
           data_type: int16
           address: 40105
           device_class: power
           unit_of_measurement: W
-          scan_interval: 10
+          scan_interval: 5
         - name: E3DC powermeter L02
           unique_id: e3dc_powermeter_L02
           data_type: int16
           address: 40106
           device_class: power
           unit_of_measurement: W
-          scan_interval: 10
+          scan_interval: 5
         - name: E3DC powermeter L03
           unique_id: e3dc_powermeter_L03
           data_type: int16
           address: 40107
           device_class: power
           unit_of_measurement: W          
-          scan_interval: 10
+          scan_interval: 5
+        - name: E3DC powermeter_1
+          unique_id: e3dc_powermeter_1
+          data_type: uint16
+          address: 40108
+          device_class: power
+          unit_of_measurement: W
+          scan_interval: 5
+        - name: E3DC powermeter L11
+          unique_id: e3dc_powermeter_L11
+          data_type: int16
+          address: 40109
+          device_class: power
+          unit_of_measurement: W
+          scan_interval: 5
+        - name: E3DC powermeter L12
+          unique_id: e3dc_powermeter_L12
+          data_type: int16
+          address: 40110
+          device_class: power
+          unit_of_measurement: W
+          scan_interval: 5
+        - name: E3DC powermeter L13
+          unique_id: e3dc_powermeter_L13
+          data_type: int16
+          address: 40111
+          device_class: power
+          unit_of_measurement: W          
+          scan_interval: 5          
         - name: E3DC SG Ready State
           unique_id: e3dc_sg_ready_state
           data_type: uint16
@@ -225,4 +257,25 @@ e3dc_modbus:
           device_class: power
           unit_of_measurement: W          
           scan_interval: 10
+          swap: word
+        - name: E3DC powermeter0 L02
+          unique_id: e3dc_powermeter0_L02
+          data_type: int32
+          address: 40139
+          device_class: power
+          unit_of_measurement: W          
           scan_interval: 10
+          swap: word
+        - name: E3DC powermeter0 L03
+          unique_id: e3dc_powermeter0_L03
+          data_type: int32
+          address: 40141
+          device_class: power
+          unit_of_measurement: W          
+          scan_interval: 10
+          swap: word
+        - name: E3DC Inverter Index 0
+          unique_id: e3dc_inverter_index_0
+          data_type: uint16
+          address: 40999
+          scan_interval: 60
